@@ -23,7 +23,7 @@ export default function HeroSection() {
         <h1 className="font-bold text-4xl md:text-5xl py-6 text-center">
           Transform PDFs Into{" "}
           <span className="relative inline-block">
-            <span className="relative z-10 px-2">Brief</span>
+            <span className="relative z-10 px-2">SHORTLY</span>
             <span
               className="absolute inset-0 bg-violet-200/50 -rotate-2 rounded-lg transform -skew-y-1"
               area-hidden="true"
@@ -40,7 +40,7 @@ export default function HeroSection() {
             className="text-white mt-6 text-base sm:text-lg lg:text-xl rounded-full px-8 sm:px-10 lg:px-12 py-4 md:py-7 lg:mt-16 bg-linear-to-r from-slate-900 to-violet-700 hover:from-violet-700 hover:to-slate-900 hover:no-underline font-bold shadow-lg transitoion-all duration-300"
           >
             <Link href="#pricing" className="flex gap-2 items-center">
-              <span>Try Brefe</span>
+              <span>Try Shortly</span>
               <ArrowRight className="animate-pulse" />
             </Link>
           </Button>

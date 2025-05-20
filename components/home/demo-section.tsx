@@ -18,7 +18,7 @@ export default function DemoSection() {
       {/* Content */}
       <div className="mx-auto max-w-4xl px-6 text-center lg:px-8">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-          Watch how <span className="text-teal-600">Brefe</span> transforms{" "}
+          Watch how <span className="text-teal-600">SHORTLY</span> transforms{" "}
           <br className="sm:hidden" />
           PDFs into{" "}
           <span className="text-rose-600 font-semibold">brief summaries</span>

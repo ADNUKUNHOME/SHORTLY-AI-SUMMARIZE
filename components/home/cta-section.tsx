@@ -28,7 +28,7 @@ export default function CtaSection() {
                   href={"#pricing"}
                   className="flex items-center justify-center px-6 py-6"
                 >
-                  Get Started{" "}
+                  <span>Get Started</span>
                   <ArrowRight className="h-4 w-4 animate-pulse ml-2" />
                 </Link>
               </Button>

@@ -23,7 +23,7 @@ export default function HeroSection() {
         <h1 className="font-bold text-4xl md:text-5xl py-6 text-center">
           Transform PDFs Into{" "}
           <span className="relative inline-block">
-            <span className="relative z-10 px-2">SHORTLY</span>
+            <span className="relative z-10 px-2">SHORT</span>
             <span
               className="absolute inset-0 bg-violet-200/50 -rotate-2 rounded-lg transform -skew-y-1"
               area-hidden="true"

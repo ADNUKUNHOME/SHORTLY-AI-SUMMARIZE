@@ -3,6 +3,9 @@
 import { z } from "zod";
 import UploadFormInput from "./upload-form-input";
 import { useUploadThing } from "@/utils/uploadthing";
+import { toast } from "sonner";
+import { generatePdfSummary } from "@/actions/upload-actions";
+
 
 const schema = z.object({
     file: z
@@ -19,10 +22,12 @@ export default function UploadForm() {
 
     const { startUpload, routeConfig } = useUploadThing('pdfUploader', {
         onClientUploadComplete: () => {
-            console.log('Uploaded Successfully!')
+            console.log('Uploaded Successfully!');
+            toast('Uploaded Successfully');
         },
         onUploadError: (err) => {
             console.error('Error occured while uploading', err);
+            toast('❌Error occured while uploading');
         },
         onUploadBegin: ({ file }) => {
             console.log('upload has begun for', file);
@@ -40,15 +45,26 @@ export default function UploadForm() {
         const validatedFields = schema.safeParse({ file });
         console.log(validatedFields);
         if (!validatedFields.success) {
-            console.log(validatedFields.error.issues ?? 'Invalid fields');
+            toast('❌Something went wrong!')
             return;
         }
+
+        toast('📃Uploading PDF! We are Uploading your PDF!')
 
         //upload the file to uploadthing
         const resp = await startUpload([file]);
         if (!resp) {
+            toast('Something went wrong! Please use a defferent file.')
             return;
         }
+
+        toast('📃Processing PDF! Hang on tight! Our AI is reading your document.')
+
+        //parse the PDF using lang chain
+
+        const summary = await generatePdfSummary(resp);
+        console.log({ summary });
+
 
     }
     return (

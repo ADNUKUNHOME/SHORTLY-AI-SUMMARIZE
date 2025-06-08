@@ -25,7 +25,6 @@ export async function generateSummaryFromOpenAi(pdfText: string) {
         }
         throw error;
     }
-
 }
 
 

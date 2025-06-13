@@ -4,13 +4,15 @@ import { getDbConnection } from "@/lib/db";
 import { generateSummaryFromGemini } from "@/lib/geminiai";
 import { fetchAndExtractPdfText } from "@/lib/langchain";
 import { generateSummaryFromOpenAi } from "@/lib/openai";
+import { formatFileNameAsTitle } from "@/utils/format-utils";
 import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 
 interface PdfSummaryType {
-    userId: string;
+    userId?: string;
     fileUrl: string;
     summary: string;
-    status: string;
+    status?: string;
     title: string;
     fileName: string;
 }
@@ -81,10 +83,13 @@ export async function generatePdfSummary(uploadResponse: [{
             }
         }
 
+        const formattedFileName = formatFileNameAsTitle(fileName);
+
         return {
             success: true,
             message: 'Summary Generated Successfully',
             data: {
+                title: fileName,
                 summary,
             }
         }
@@ -107,7 +112,7 @@ async function savePdfSummary({
 }: PdfSummaryType) {
     try {
         const sql = await getDbConnection();
-        await sql`
+        const [savedSummary] = await sql`
          INSERT INTO pdf_summaries(
             user_id,
             original_file_url,
@@ -122,9 +127,9 @@ async function savePdfSummary({
             ${status},
             ${title},
             ${fileName}
-        );
+        ) RETURNING id, summary_text;
         `
-
+        return savedSummary;
 
     } catch (error) {
         console.error('Error saving PDF summary', error);
@@ -163,14 +168,26 @@ export async function storePdfSummaryAction({
         if (!savedSummary) {
             return {
                 success: false,
-                message: 'Failed to save PDF summary'
+                message: 'Failed to save PDF summary, Please try again...'
             }
         }
-
     } catch (error) {
         return {
             success: false,
             message: error instanceof Error ? error.message : 'Error saving PDF summary'
         }
     }
+
+    //Revalidate cache
+
+    revalidatePath(`/summaries/$${savedSummary.id}`);
+
+    return {
+        success: true,
+        message: 'PDF Summary is saved successfully',
+        data: {
+            id: savedSummary.id,
+        }
+    }
+
 }

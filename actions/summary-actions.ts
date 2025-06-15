@@ -15,7 +15,7 @@ export async function DeleteSummaryAction({ summaryId }: { summaryId: string }) 
 
         const sql = await getDbConnection();
         const result = await sql`DELETE FROM pdf_summaries
-        WHERE id = ${summaryId} AND user_id = 'example.pdf' 
+        WHERE id = ${summaryId} AND user_id = ${userId} 
         RETURNING id;
         `
 

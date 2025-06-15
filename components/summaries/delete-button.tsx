@@ -30,8 +30,8 @@ export default function DeleteButton({ summaryId }: DeleteButtonProps) {
                 toast('Failed to delete Summary!');
             }
             setOpen(false);
+            toast('Summary Deleted Successfully.');
         })
-
     }
 
     return (

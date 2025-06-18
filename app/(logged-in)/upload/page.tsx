@@ -1,8 +1,22 @@
 import { Badge } from "@/components/ui/badge";
 import UploadForm from "@/components/upload/upload-form";
+import { hasReachedUploadLimit } from "@/utils/user";
+import { currentUser } from "@clerk/nextjs/server";
 import { Sparkle } from "lucide-react";
+import { redirect } from "next/navigation";
 
-export default function Page() {
+export default async function Page() {
+
+    const user = await currentUser();
+    if (!user?.id) {
+        redirect('/sign-in');
+    }
+    const userId = user?.id;
+    const { hasReachedLimit } = await hasReachedUploadLimit(userId);
+    if (hasReachedLimit) {
+        redirect('/dashboard');
+    }
+
     return (
         <section className="min-h-screen">
             <div className="mx-auto min-w-7xl px-6 py-24 sm:py-32 lg:px-8">

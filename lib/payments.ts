@@ -12,11 +12,11 @@ export const handleCheckoutSessionCompleted = async ({
     const customerId = session.customer as string;
     const customer = await stripe.customers.retrieve(customerId);
     const priceId = session.line_items?.data[0]?.price?.id;
-    const sql = await getDbConnection();
 
 
     if ('email' in customer && priceId) {
         const { email, name } = customer;
+        const sql = await getDbConnection();
 
         await createOrUpdateUser({
             sql,
@@ -55,7 +55,7 @@ async function createOrUpdateUser({
     try {
         const user = await sql`SELECT * FROM users WHERE email = ${email}`;
         if (user.length === 0) {
-            await sql`INSERT INTO users (email, full_name, customer_id, price_id, status) VALUES (${email}, ${fullName}, ${customerId}, ${priceId}, ${status})`
+            await sql`INSERT INTO users (email, full_name, customer_id, price_id, status) VALUES (${email}, ${fullName}, ${customerId}, ${priceId}, ${status})`;
         }
     } catch (error) {
         console.error('Error handling update user', error);

@@ -1,6 +1,7 @@
 import { BookCheck } from "lucide-react";
 import NavLink from "./nav-link";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import PlanBadge from "./plan-badge";
 
 export default function Header() {
     return (
@@ -13,23 +14,23 @@ export default function Header() {
             </div>
             <div className="flex lg:justify-center lg:items-center gap-4 lg:gap-12">
                 <NavLink href="#pricing">Pricing</NavLink>
-                 <SignedIn>
+                <SignedIn>
                     <NavLink href="/dashboard">Your Summaries</NavLink>
-                 </SignedIn> 
+                </SignedIn>
             </div>
             <div className="flex lg:justify-end lg:flex-1">
-                  <SignedIn>
+                <SignedIn>
                     <div className="flex gap-2 items-center">
                         <NavLink href="/upload">Upload PDF</NavLink>
-                        <div>Pro</div>
+                        <PlanBadge />
                         <SignedIn>
                             <UserButton />
                         </SignedIn>
                     </div>
-                    </SignedIn>
-                    <SignedOut>
-                        <NavLink href="/sign-in">Sign in</NavLink>
-                    </SignedOut>
+                </SignedIn>
+                <SignedOut>
+                    <NavLink href="/sign-in">Sign in</NavLink>
+                </SignedOut>
             </div>
         </nav>
     );

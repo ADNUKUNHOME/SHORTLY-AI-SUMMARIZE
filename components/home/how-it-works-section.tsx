@@ -4,6 +4,7 @@ import {
   MoveRight,
   PackageSearch,
 } from "lucide-react";
+import { MotionDiv, MotionH2, MotionH3 } from "../common/motion-wrapper";
 
 type step = { icon: React.ReactNode; label: string; description: string };
 
@@ -59,27 +60,44 @@ export default function HowItWorksSection() {
           />
         </div>
         <div className="text-center mb-16">
-          <h2 className="text-xl font-bold text-violet-700 mb-4 uppercase">
+          <MotionH2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-xl font-bold text-violet-700 mb-4 uppercase">
             how it works
-          </h2>
-          <h3 className="font-bold text-3xl mx-auto max-w-2xl mb-10">
+          </MotionH2>
+          <MotionH3
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="font-bold text-3xl mx-auto max-w-2xl mb-10">
             Transform any PDF into an easy to digest summary in three simple
             steps
-          </h3>
+          </MotionH3>
           <div className="grid grid-cols-1 md:grid-cols-3 max-w-6xl mx-auto relative">
             {steps.map((step, ind) => (
-              <div key={ind} className="flex relative items-stretch">
+              <MotionDiv
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: ind * 0.2 }}
+                key={ind}
+                className="flex relative items-stretch">
                 <StepItem {...step} />
                 {ind < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
+                  <MotionDiv
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: ind * 0.2 + 0.3 }}
+                    className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
                     <MoveRight
                       size={32}
                       strokeWidth={1}
                       className="text-violet-700"
                     />
-                  </div>
+                  </MotionDiv>
                 )}
-              </div>
+              </MotionDiv>
             ))}
           </div>
         </div>

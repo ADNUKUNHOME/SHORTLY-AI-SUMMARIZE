@@ -4,6 +4,8 @@ import DeleteButton from "./delete-button";
 import { FileText } from "lucide-react";
 import { cn, formatFileName } from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";
+import { MotionDiv } from "../common/motion-wrapper";
+import { itemsVarients } from "@/utils/constants";
 
 const SummaryHeader = ({
     fileUrl,
@@ -37,7 +39,17 @@ const StatusBadge = ({ status }: { status: string }) => {
 
 export default function SummaryCard({ summary }: { summary: any }) {
     return (
-        <div>
+        <MotionDiv
+            variants={itemsVarients}
+            initial="hidden"
+            animate="visible"
+            whileHover={{
+                scale: 1.02,
+                transition: {
+                    duration: 0.2,
+                    ease: 'easeOut'
+                }
+            }}>
             <Card className="relative h-full">
                 <div className="absolute top-2 right-2">
                     <DeleteButton summaryId={summary.id} />
@@ -59,6 +71,6 @@ export default function SummaryCard({ summary }: { summary: any }) {
                     </div>
                 </Link>
             </Card>
-        </div>
+        </MotionDiv>
     )
 }

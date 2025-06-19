@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { generatePdfSummary, storePdfSummaryAction } from "@/actions/upload-actions";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import LoadingSkeleton from "./loading-skeleton";
 
 
 const schema = z.object({
@@ -121,6 +122,7 @@ export default function UploadForm() {
                             </div>
                         </div>
                     </div>
+                    <LoadingSkeleton />
                 </>
             )}
         </div>

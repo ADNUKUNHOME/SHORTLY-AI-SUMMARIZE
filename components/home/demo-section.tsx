@@ -1,3 +1,6 @@
+import { Pizza } from "lucide-react";
+import DemoContents from "./demo-contents";
+
 export default function DemoSection() {
   return (
     <section className="relative isolate overflow-hidden py-24 sm:py-32">
@@ -16,7 +19,8 @@ export default function DemoSection() {
       </div>
 
       {/* Content */}
-      <div className="mx-auto max-w-4xl px-6 text-center lg:px-8">
+      <div className="mx-auto max-w-4xl px-6 flex flex-col items-center justify-center text-center lg:px-8">
+        <Pizza className="w-6 h-6 text-violet-700" />
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
           Watch how <span className="text-teal-600">SHORTLY</span> transforms{" "}
           <br className="sm:hidden" />
@@ -28,7 +32,9 @@ export default function DemoSection() {
         </p>
 
         {/* Demo Card */}
-        <div className="flex items-center justify-center px-2 sm:px-4 lg:px-6"></div>
+        <div className="flex items-center justify-center px-2 my-12  sm:px-4 lg:px-6">
+          <DemoContents />
+        </div>
       </div>
     </section>
   );

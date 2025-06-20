@@ -5,6 +5,8 @@ import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { MotionDiv, MotionH1 } from "../common/motion-wrapper";
+import { AnimatePresence } from "motion/react";
 
 const dummySections = [
     {
@@ -111,18 +113,41 @@ export default function DemoContents() {
                     </div>
                 ))}
             </div>
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900 my-12">{section.title}</h1>
-            <div className="flex flex-col gap-4 flex-grow">
-                {
-                    section.points.map((point, idx) => (
-                        <p
+            <AnimatePresence mode="wait">
+                <MotionH1
+                    key={section.title}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -30 }}
+                    transition={{ duration: 0.4 }}
+                    className="text-3xl font-bold tracking-tight text-gray-900 my-12">
+                    {section.title}
+                </MotionH1>
+            </AnimatePresence>
+
+            <AnimatePresence mode="wait">
+                <MotionDiv
+                    key={currentSection}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 30 }}
+                    transition={{ duration: 0.4 }}
+                    className="flex flex-col gap-4 flex-grow"
+                >
+                    {section.points.map((point, idx) => (
+                        <MotionDiv
                             key={idx}
-                            className="text-base font-bold flex border border-gray-200 shadow-lg min-h-12 h-auto rounded-2xl w-full items-center p-5">
-                            * {point}
-                        </p>
-                    ))
-                }
-            </div>
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: 0.1 * idx }}
+                            className="text-base font-bold flex border border-gray-200 shadow-lg min-h-12 h-auto rounded-2xl w-full items-center p-5"
+                        >
+                            ⮞ {point}
+                        </MotionDiv>
+                    ))}
+                </MotionDiv>
+            </AnimatePresence>
+
             <div className="flex items-center justify-between px-3 pt-4 bottom-0 mt-auto h-16 border-t">
                 <Button
                     variant={'ghost'}

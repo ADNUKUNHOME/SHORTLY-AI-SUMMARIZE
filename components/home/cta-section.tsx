@@ -21,7 +21,7 @@ export default function CtaSection() {
               <Button
                 size={"lg"}
                 variant={"link"}
-                className="w-full min-[400px]:w-auto flex items-center justify-center bg-linear-to-r from-slate-950 to-violet-700 hover:from-violet-700 hover:to-slate-900 hover:text-white text-white transition-all duration-300
+                className="w-full min-[400px]:w-auto flex items-center justify-center hover:no-underline bg-linear-to-r from-slate-950 to-violet-700 hover:from-violet-700 hover:to-slate-900 hover:text-white text-white transition-all duration-300
                 "
               >
                 <Link

@@ -1,5 +1,6 @@
 import { Pizza } from "lucide-react";
 import DemoContents from "./demo-contents";
+import { MotionDiv } from "../common/motion-wrapper";
 
 export default function DemoSection() {
   return (
@@ -19,7 +20,11 @@ export default function DemoSection() {
       </div>
 
       {/* Content */}
-      <div className="mx-auto max-w-4xl px-6 flex flex-col items-center justify-center text-center lg:px-8">
+      <MotionDiv
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.2 }}
+        className="mx-auto max-w-4xl px-6 flex flex-col items-center justify-center text-center lg:px-8">
         <Pizza className="w-6 h-6 text-violet-700" />
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
           Watch how <span className="text-teal-600">SHORTLY</span> transforms{" "}
@@ -35,7 +40,7 @@ export default function DemoSection() {
         <div className="flex items-center justify-center px-2 my-12  sm:px-4 lg:px-6">
           <DemoContents />
         </div>
-      </div>
+      </MotionDiv>
     </section>
   );
 }

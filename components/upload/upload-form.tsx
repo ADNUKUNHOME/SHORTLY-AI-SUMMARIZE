@@ -36,8 +36,8 @@ export default function UploadForm() {
             console.error('Error occured while uploading', err);
             toast('❌Error occured while uploading');
         },
-        onUploadBegin: ({ file }) => {
-            console.log('upload has begun for', file);
+        onUploadBegin: (data) => {
+            console.log('upload has begun for', data);
         }
     })
 
@@ -61,8 +61,8 @@ export default function UploadForm() {
             toast('📃Uploading PDF! We are Uploading your PDF!')
 
             //upload the file to uploadthing
-            const resp = await startUpload([file]);
-            if (!resp) {
+            const uploadResponse = await startUpload([file]);
+            if (!uploadResponse) {
                 toast('Something went wrong! Please use a defferent file.')
                 setIsLoading(false);
                 return;
@@ -71,8 +71,11 @@ export default function UploadForm() {
             toast('📃Processing PDF! Hang on tight! Our AI is reading your document.')
 
             //parse the PDF using lang chain
-
-            const result = await generatePdfSummary(resp);
+            const uploadFileUrl = uploadResponse[0].serverData.fileUrl;
+            const result = await generatePdfSummary({
+                fileUrl: uploadFileUrl,
+                fileName: file.name
+            });
 
             const { data = null, message = null } = result || {};
 
@@ -81,7 +84,7 @@ export default function UploadForm() {
                 toast('📃Saving PDF! We are saving your summary');
                 if (data?.summary) {
                     storeResult = await storePdfSummaryAction({
-                        fileUrl: resp[0].serverData.file.url,
+                        fileUrl: uploadResponse[0].serverData.fileUrl,
                         summary: data.summary,
                         title: data.title,
                         fileName: file.name

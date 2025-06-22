@@ -29,7 +29,7 @@ export default function UploadForm() {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
-    const { startUpload, routeConfig: _routeConfig } = useUploadThing('pdfUploader', {
+    const { startUpload } = useUploadThing('pdfUploader', {
         onClientUploadComplete: () => {
             console.log('Uploaded Successfully!');
             toast('Uploaded Successfully');

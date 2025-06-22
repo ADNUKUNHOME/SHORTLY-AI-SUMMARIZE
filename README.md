@@ -1,4 +1,4 @@
-# 📄 Shortly AI — Transform PDFs into Powerful Summaries with AI 🧠✨
+![image](https://github.com/user-attachments/assets/e1a85f16-f06a-4bd0-99d0-5795b64a3757)# 📄 Shortly AI — Transform PDFs into Powerful Summaries with AI 🧠✨
 
 Shortly AI is an AI-powered SaaS platform built with modern web technologies like **Next.js 15 App Router**, **Clerk**, **GeminiAI/ OpenAI GPT-4**, **Langchain**, **TailwindCSS**, and **Stripe**. It lets users upload PDF files, summarize them intelligently with AI (including emojis and markdown formatting), and manage those summaries efficiently.
 
@@ -62,6 +62,8 @@ Shortly AI is an AI-powered SaaS platform built with modern web technologies lik
 > ⚠️ Webhook routes are protected. Ensure the proper Stripe secret is set.
 
 ---
+
+## ⚙️ Environment Variables
 
 Create a `.env.local` file with:
 

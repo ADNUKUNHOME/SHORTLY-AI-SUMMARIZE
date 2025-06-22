@@ -93,7 +93,8 @@ export default function DemoContents() {
 
     const section = dummySections[currentSection];
     return (
-        <Card className="relative flex flex-col px-4 py-6 mx-auto gap-4 w-full sm:w-[300px] md:w-xl lg:w-[600px] h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden rounded-xl shadow-xl hover:shadow-2xl">
+        <Card className="relative flex flex-col px-4 py-6 mx-auto gap-4 w-full sm:w-[300px] md:w-xl lg:w-[600px] sm:h-auto lg:h-[600px] overflow-hidden rounded-xl shadow-xl hover:shadow-2xl">
+            {/* progress bar */}
             <div className="px-4 flex gap-1.5">
                 {dummySections.map((_, index) => (
                     <div
@@ -113,6 +114,7 @@ export default function DemoContents() {
                     </div>
                 ))}
             </div>
+            {/* contents of the section */}
             <AnimatePresence mode="wait">
                 <MotionH1
                     key={section.title}
@@ -120,7 +122,7 @@ export default function DemoContents() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -30 }}
                     transition={{ duration: 0.4 }}
-                    className="text-3xl font-bold tracking-tight text-gray-900 my-12">
+                    className="text-3xl sm:text-2xl lg:text-4xl font-bold tracking-tight text-gray-900 my-12 sm:my-4 lg:my-12">
                     {section.title}
                 </MotionH1>
             </AnimatePresence>
@@ -140,13 +142,15 @@ export default function DemoContents() {
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.3, delay: 0.1 * idx }}
-                            className="text-base font-bold flex border border-gray-200 shadow-lg min-h-12 h-auto rounded-2xl w-full items-center p-5"
+                            className="text-base sm:text-sm lg:text-base font-bold flex border border-gray-200 shadow-lg min-h-12 sm:min-h-auto lg:min-h-12 h-auto rounded-2xl w-full items-center p-5"
                         >
                             ⮞ {point}
                         </MotionDiv>
                     ))}
                 </MotionDiv>
             </AnimatePresence>
+
+            {/* navigation buttons and progress dots */}
 
             <div className="flex items-center justify-between px-3 pt-4 bottom-0 mt-auto h-16 border-t">
                 <Button

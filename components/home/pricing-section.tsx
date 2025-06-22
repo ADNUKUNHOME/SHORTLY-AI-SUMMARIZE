@@ -107,6 +107,9 @@ export default function PricingSection() {
             Pricing
           </h2>
         </MotionDiv>
+        <div className="relative my-12 text-center p-2 w-full bg-yellow-200 border border-yellow-400 border-dashed text-yellow-800 rounded-lg shadow-sm">
+          ⚠️ This is a demo project using Stripe test mode. No real payments are processed.
+        </div>
         <div className="relative flex flex-col lg:flex-row justify-center items-center lg:items-stretch gap-8">
           {pricingPlans.map((plan) => (
             <PricingCard key={plan.id} {...plan} />

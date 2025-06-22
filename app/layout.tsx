@@ -17,6 +17,9 @@ const fontSans = FontSans({
 export const metadata: Metadata = {
   title: "SHORTLY - AI-powered PDF summarization",
   description: "SHORTLY is letting you to save your time by summarizing your long PDFs to short bullet points.",
+  icons: {
+    icon: '/favicon.png'
+  },
   openGraph: {
     images: [
       {

@@ -26,7 +26,7 @@ export default function Footer() {
                 {/* Right side: Social links */}
                 <div className="flex gap-5 items-center text-muted-foreground">
                     <Link
-                        href="mailto:your@email.com"
+                        href="adnukunhome7@gmail.com"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:text-violet-500 transition-colors"
@@ -34,7 +34,7 @@ export default function Footer() {
                         <Mail className="w-5 h-5" />
                     </Link>
                     <Link
-                        href="https://github.com/yourprofile"
+                        href="https://github.com/ADNUKUNHOME"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:text-violet-500 transition-colors"
@@ -42,7 +42,7 @@ export default function Footer() {
                         <Github className="w-5 h-5" />
                     </Link>
                     <Link
-                        href="https://linkedin.com/in/yourprofile"
+                        href="https://www.linkedin.com/in/muhammad-adnan-a479052a1"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:text-violet-500 transition-colors"
@@ -50,7 +50,7 @@ export default function Footer() {
                         <Linkedin className="w-5 h-5" />
                     </Link>
                     <Link
-                        href="https://instagram.com/yourprofile"
+                        href="https://www.instagram.com/adhnan.abdullah"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:text-violet-500 transition-colors"

@@ -6,6 +6,8 @@ import { cn, formatFileName } from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";
 import { MotionDiv } from "../common/motion-wrapper";
 import { itemsVarients } from "@/utils/constants";
+import { Summary } from "@/types/pdf-summary";
+
 
 const SummaryHeader = ({
     fileUrl,
@@ -36,15 +38,6 @@ const StatusBadge = ({ status }: { status: string }) => {
         )}>{status}</span>
     )
 }
-
-type Summary = {
-    id: string;
-    title: string | null;
-    summary_text: string;
-    status: string;
-    created_at: string;
-    origingal_file_url: string;
-};
 
 export default function SummaryCard({ summary }: { summary: Summary }) {
     return (

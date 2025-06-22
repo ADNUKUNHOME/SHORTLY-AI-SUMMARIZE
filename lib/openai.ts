@@ -19,10 +19,15 @@ export async function generateSummaryFromOpenAi(pdfText: string) {
             max_output_tokens: 1500,
         });
         return response.output_text;
-    } catch (error: any) {
-        if (error?.status === 429) {
-            throw new Error('RATE_LIMIT_EXCEEDED');
+
+    } catch (error: unknown) {
+        if (error && typeof error === 'object' && 'status' in error) {
+            const err = error as { status: number };
+            if (err.status === 429) {
+                throw new Error('RATE_LIMIT_EXCEEDED');
+            }
         }
+
         throw error;
     }
 }

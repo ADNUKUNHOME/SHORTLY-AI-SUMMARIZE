@@ -4,17 +4,98 @@ import { getDbConnection } from "@/lib/db";
 import { generateSummaryFromGemini } from "@/lib/geminiai";
 import { fetchAndExtractPdfText } from "@/lib/langchain";
 import { generateSummaryFromOpenAi } from "@/lib/openai";
+import { PdfSummaryType, StorePdfSummaryResult } from "@/types/pdf-summary";
 import { formatFileNameAsTitle } from "@/utils/format-utils";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
-interface PdfSummaryType {
-    userId?: string;
-    fileUrl: string;
-    summary: string;
-    status?: string;
-    title: string;
-    fileName: string;
+
+
+async function savePdfSummary({
+    userId,
+    fileUrl,
+    summary,
+    status,
+    title,
+    fileName
+}: PdfSummaryType) {
+    try {
+        const sql = await getDbConnection();
+        const [savedSummary] = await sql`
+         INSERT INTO pdf_summaries(
+            user_id,
+            original_file_url,
+            summary_text,
+            status,
+            title,
+            file_name
+        ) VALUES(
+            ${userId},
+            ${fileUrl},
+            ${summary},
+            ${status},
+            ${title},
+            ${fileName}
+        ) RETURNING id, summary_text;
+        `
+        return savedSummary;
+
+    } catch (error) {
+        console.error('Error saving PDF summary', error);
+        throw error;
+    }
+}
+
+export async function storePdfSummaryAction({
+    fileUrl,
+    summary,
+    status,
+    title,
+    fileName
+}: PdfSummaryType): Promise<StorePdfSummaryResult> {
+    //save PDF summary
+    try {
+        const { userId } = await auth();
+        if (!userId) {
+            return {
+                success: false,
+                message: 'User not found!'
+            }
+        }
+        const savedSummary = await savePdfSummary({
+            userId,
+            fileUrl,
+            summary,
+            status,
+            title,
+            fileName
+        });
+
+        if (!savedSummary) {
+            return {
+                success: false,
+                message: 'Failed to save PDF summary, Please try again...'
+            }
+        }
+
+        //Revalidate cache
+
+        revalidatePath(`/summaries/$${savedSummary.id}`);
+
+        return {
+            success: true,
+            message: 'PDF Summary is saved successfully',
+            data: {
+                id: savedSummary.id,
+            }
+        }
+
+    } catch (error) {
+        return {
+            success: false,
+            message: error instanceof Error ? error.message : 'Error saving PDF summary'
+        }
+    }
 }
 
 export async function generatePdfSummary({
@@ -92,94 +173,4 @@ export async function generatePdfSummary({
             data: null,
         }
     }
-}
-
-async function savePdfSummary({
-    userId,
-    fileUrl,
-    summary,
-    status,
-    title,
-    fileName
-}: PdfSummaryType) {
-    try {
-        const sql = await getDbConnection();
-        const [savedSummary] = await sql`
-         INSERT INTO pdf_summaries(
-            user_id,
-            original_file_url,
-            summary_text,
-            status,
-            title,
-            file_name
-        ) VALUES(
-            ${userId},
-            ${fileUrl},
-            ${summary},
-            ${status},
-            ${title},
-            ${fileName}
-        ) RETURNING id, summary_text;
-        `
-        return savedSummary;
-
-    } catch (error) {
-        console.error('Error saving PDF summary', error);
-        throw error;
-    }
-}
-
-export async function storePdfSummaryAction({
-    fileUrl,
-    summary,
-    status,
-    title,
-    fileName
-}: PdfSummaryType) {
-    //user is logged in and has a userId
-
-    //save PDF summary
-    let savedSummary: any;
-    try {
-        const { userId } = await auth();
-        if (!userId) {
-            return {
-                success: false,
-                message: 'User not found!'
-            }
-        }
-        savedSummary = await savePdfSummary({
-            userId,
-            fileUrl,
-            summary,
-            status,
-            title,
-            fileName
-        });
-
-        if (!savedSummary) {
-            return {
-                success: false,
-                message: 'Failed to save PDF summary, Please try again...'
-            }
-        }
-    } catch (error) {
-        return {
-            success: false,
-            message: error instanceof Error ? error.message : 'Error saving PDF summary'
-        }
-    }
-
-    //Revalidate cache
-
-    revalidatePath(`/summaries/$${savedSummary.id}`);
-
-    return {
-        success: true,
-        message: 'PDF Summary is saved successfully',
-        data: {
-            id: savedSummary.id,
-        }
-    }
-
 }

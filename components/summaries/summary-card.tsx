@@ -37,7 +37,16 @@ const StatusBadge = ({ status }: { status: string }) => {
     )
 }
 
-export default function SummaryCard({ summary }: { summary: any }) {
+type Summary = {
+    id: string;
+    title: string | null;
+    summary_text: string;
+    status: string;
+    created_at: string;
+    origingal_file_url: string;
+};
+
+export default function SummaryCard({ summary }: { summary: Summary }) {
     return (
         <MotionDiv
             variants={itemsVarients}

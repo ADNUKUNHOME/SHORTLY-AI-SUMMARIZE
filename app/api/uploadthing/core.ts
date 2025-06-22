@@ -7,7 +7,7 @@ const f = createUploadthing();
 export const ourFileRouter = {
     pdfUploader: f({ pdf: { maxFileSize: '32MB' } })
         .middleware(
-            async ({ req }) => {
+            async ({ req: _req }) => {
                 const user = await currentUser();
                 if (!user) throw new UploadThingError('Unautherized')
                 return { userId: user.id }

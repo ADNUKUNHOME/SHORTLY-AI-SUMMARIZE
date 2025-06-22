@@ -1,5 +1,10 @@
 import Stripe from "stripe"
 import { getDbConnection } from "./db"
+import { NeonQueryFunction } from "@neondatabase/serverless";
+
+
+
+type Sql = NeonQueryFunction<false, false>;
 
 export const handleCheckoutSessionCompleted = async ({
     session,
@@ -37,6 +42,7 @@ export const handleCheckoutSessionCompleted = async ({
 
 }
 
+
 async function createOrUpdateUser({
     sql,
     email,
@@ -45,7 +51,7 @@ async function createOrUpdateUser({
     priceId,
     status,
 }: {
-    sql: any;
+    sql: Sql;
     email: string;
     fullName: string;
     customerId: string;
@@ -68,7 +74,7 @@ async function createPayment({
     priceId,
     userEmail
 }: {
-    sql: any;
+    sql: Sql;
     session: Stripe.Checkout.Session;
     priceId: string;
     userEmail: string;

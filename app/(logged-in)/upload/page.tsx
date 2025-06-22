@@ -38,7 +38,7 @@ export default async function Page() {
                     <MotionDiv
                         variants={itemsVarients}
                         className="capitalize text-3xl font-bold tracking-tight sm:text-4xl text-gray-900">
-                        Start Uploading Your PDF's
+                        Start Uploading Your PDFs
                     </MotionDiv>
                     <MotionDiv
                         variants={itemsVarients}>

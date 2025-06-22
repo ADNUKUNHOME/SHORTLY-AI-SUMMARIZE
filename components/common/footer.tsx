@@ -3,7 +3,6 @@
 import { Mail, Github, Linkedin, Instagram, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { MotionFooter } from './motion-wrapper';
-import BgGradient from './bg-gradient';
 
 export default function Footer() {
     return (

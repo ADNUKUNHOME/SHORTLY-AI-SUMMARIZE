@@ -8,6 +8,7 @@ import { generatePdfSummary, storePdfSummaryAction } from "@/actions/upload-acti
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import LoadingSkeleton from "./loading-skeleton";
+import { StorePdfSummaryResult } from "@/types/pdf-summary";
 
 
 const schema = z.object({
@@ -21,13 +22,14 @@ const schema = z.object({
         )
 })
 
+
 export default function UploadForm() {
 
     const formRef = useRef<HTMLFormElement>(null);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
-    const { startUpload, routeConfig } = useUploadThing('pdfUploader', {
+    const { startUpload, routeConfig: _routeConfig } = useUploadThing('pdfUploader', {
         onClientUploadComplete: () => {
             console.log('Uploaded Successfully!');
             toast('Uploaded Successfully');
@@ -77,10 +79,10 @@ export default function UploadForm() {
                 fileName: file.name
             });
 
-            const { data = null, message = null } = result || {};
+            const { data = null } = result || {};
 
             if (data) {
-                let storeResult: any;
+                let storeResult: StorePdfSummaryResult;
                 toast('📃Saving PDF! We are saving your summary');
                 if (data?.summary) {
                     storeResult = await storePdfSummaryAction({
@@ -88,11 +90,17 @@ export default function UploadForm() {
                         summary: data.summary,
                         title: data.title,
                         fileName: file.name
-                    })
-                    toast('✨Your PDF has been successfully summarized and saved!');
-                    formRef.current?.reset();
-                    router.push(`/summaries/${storeResult.data.id}`);
+                    });
+
+                    if (storeResult.success) {
+                        toast('✨Your PDF has been successfully summarized and saved!');
+                        formRef.current?.reset();
+                        router.push(`/summaries/${storeResult.data.id}`);
+                    } else {
+                        toast(`❌ ${storeResult.message}`);
+                    }
                 }
+
             }
 
 

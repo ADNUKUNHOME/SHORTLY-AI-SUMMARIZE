@@ -18,11 +18,12 @@ const SectionTitle = ({ title }: { title: string }) => {
 }
 
 export function SummaryViewer({ summary }: { summary: string }) {
+
+    const [currentSection, setCurrentSection] = useState(0);
+
     if (!summary?.trim()) {
         return <p className="text-center text-muted-foreground">No summary available.</p>;
     }
-
-    const [currentSection, setCurrentSection] = useState(0);
 
     const handleNext = () => setCurrentSection((prev) => Math.min(prev + 1, sections.length - 1));
     const handlePrevious = () => setCurrentSection((prev) => Math.max(prev - 1, 0));
@@ -43,7 +44,6 @@ export function SummaryViewer({ summary }: { summary: string }) {
                 <div className="px-4 sm:px-6">
                     <SectionTitle title={sections[currentSection]?.title || ''} />
                     <ContentSection
-                        title={sections[currentSection]?.title || ''}
                         points={sections[currentSection]?.points || []}
                     />
                 </div>

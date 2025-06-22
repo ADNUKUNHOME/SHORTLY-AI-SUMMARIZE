@@ -71,7 +71,7 @@ export default async function DashboardPage() {
                         animate="visible"
                         className="mb-6">
                         <div className="bg-violet-50 border border-violet-200 rounded-lg p-4 text-violet-800">
-                            <p className="text-sm">You've reached the limit of {uploadLimit} uploads on the basic plan.{' '}
+                            <p className="text-sm">You are reached the limit of {uploadLimit} uploads on the basic plan.{' '}
                                 <Link href="/#pricing" className="text-violet-800 underline font-medium underline-offset-4 inline-flex items-center">
                                     Click here to upgrade to Pro {' '}
                                     <ArrowRight className="w-4 h-4 inline-block" />

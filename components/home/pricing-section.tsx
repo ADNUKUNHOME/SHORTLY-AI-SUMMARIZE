@@ -35,7 +35,6 @@ function PricingCard({
   price,
   items,
   paymentLink,
-  priceId,
 }: PriceType) {
   return (
     <MotionDiv

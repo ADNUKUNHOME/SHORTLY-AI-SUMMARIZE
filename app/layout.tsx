@@ -5,6 +5,7 @@ import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
+import { ORIGIN_URL } from "@/utils/helpers";
 
 
 const fontSans = FontSans({
@@ -16,6 +17,17 @@ const fontSans = FontSans({
 export const metadata: Metadata = {
   title: "SHORTLY - AI-powered PDF summarization",
   description: "SHORTLY is letting you to save your time by summarizing your long PDFs to short bullet points.",
+  openGraph: {
+    images: [
+      {
+        url: '/opengraph-image.png'
+      }
+    ]
+  },
+  metadataBase: new URL(ORIGIN_URL),
+  alternates: {
+    canonical: ORIGIN_URL,
+  }
 };
 
 export default function RootLayout({
